@@ -8,8 +8,15 @@ public class CharacterMovement : MonoBehaviour
     public float runSpeed = 6.0f;
     public float turnSpeed = 180.0f;
 
+     public float defaultYPosition = 1f;
+
     private float horizontalMovement;
     private float verticalMovement;
+
+    private void Start()
+    {
+        transform.position = new Vector3(transform.position.x, defaultYPosition, transform.position.z);
+    }
 
     void Update()
     {

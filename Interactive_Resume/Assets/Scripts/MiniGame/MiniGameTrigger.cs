@@ -14,17 +14,16 @@ public class MiniGameTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("MiniGameZone"))
+        if (other.gameObject.CompareTag("Player"))
         {
             inTriggerZone = true;
             letterText.text = miniGameKey;
-            Debug.Log("Test01");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("MiniGameZone"))
+        if (other.gameObject.CompareTag("Player"))
         {
             inTriggerZone = false;
             letterText.text = "";
@@ -42,6 +41,6 @@ public class MiniGameTrigger : MonoBehaviour
     private void LoadMiniGame()
     {
         // Code pour charger la scène du mini-jeu
-        UnityEngine.SceneManagement.SceneManager.LoadScene(miniGameSceneName);
+        SceneTransitionManager.Instance.ChangeScene(miniGameSceneName);
     }
 }
