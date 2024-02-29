@@ -6,7 +6,7 @@ public class ScoreManager : MonoBehaviour
 {
     public static event Action<int> OnScoreChanged;
 
-    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private int score;
 
     public void AddScore(int points)
