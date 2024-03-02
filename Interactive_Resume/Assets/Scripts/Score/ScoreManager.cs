@@ -9,17 +9,26 @@ public class ScoreManager : MonoBehaviour
     public static event Action<int> OnScoreChanged;
 
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI scoreToReachText;
     [SerializeField] private int score;
     [SerializeField] private int scoreToReach;
 
     public Timer timer; // Référence au script Timer
 
     public ObjectSpawner objectSpawner; // Référence à l'Object Spawner
+    public Transform particleSpawnPoint; // Assignez le GameObject vide dans l'éditeur Unity
 
     public GameObject particleEffectPrefab; // Prefab des particules à instancier
+    
+    public GameObject canvasUi;
     public float returnDelay = 3f; // Délai avant de retourner à la scène précédente
 
     private Coroutine returnCoroutine;
+
+    private void Start()
+    {
+        scoreToReachText.text = "Score to reach: " + scoreToReach;
+    }
 
     public void AddScore(int points)
     {
@@ -42,6 +51,10 @@ public class ScoreManager : MonoBehaviour
                 timer.StopTimer();
             }
 
+            if(canvasUi != null){
+                canvasUi.SetActive(false);
+            }
+
             // Démarre la coroutine pour retourner à la scène précédente après un délai
             if (returnCoroutine == null)
             {
@@ -58,13 +71,10 @@ public class ScoreManager : MonoBehaviour
 
     private void InstantiateParticleEffect()
     {
-        if (particleEffectPrefab != null)
+        if (particleEffectPrefab != null && particleSpawnPoint != null)
         {
-             // Instancier les particules
-            GameObject particleObject = Instantiate(particleEffectPrefab, transform.position, transform.rotation);
-        
-            // Accéder à la rotation du particle effect
-            Quaternion rotation = particleObject.transform.rotation;
+             // Instancier les particules à la position et rotation du spawnPoint
+            Instantiate(particleEffectPrefab, particleSpawnPoint.position, particleSpawnPoint.rotation);
         }
     }
 
